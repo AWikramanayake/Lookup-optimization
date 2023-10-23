@@ -37,7 +37,7 @@ program loop
 
     if (seq_list .eqv. .false.) then
         call cpu_time(T2)
-        write(*, '(A, F12.9, A)') 'Elapsed read time : ', (T2 - T1), ' s'
+        write(*, '(A, F12.9, A)') 'Elapsed read time: ', (T2 - T1), ' s'
         print*, 'Search for matches has begun'
         call cpu_time(T1)
         call find_matches_single(test_seq, w_ids, list_length, matches)
@@ -48,14 +48,14 @@ program loop
         allocate(test_seqs(test_length))
         call listread(20, test_length, test_name, test_seqs, skip_header_test)
         call cpu_time(T2)
-        write(*, '(A, F12.9, A)') 'Combined elapsed read time for both lists : ', (T2 - T1), ' s'
+        write(*, '(A, F12.9, A)') 'Combined elapsed read time for both lists: ', (T2 - T1), ' s'
         print*, 'Search for matches has begun'
         call cpu_time(T1)
         call find_matches_list(test_seqs, test_length, w_ids, list_length)
         call cpu_time(T2)
     end if
 
-    write(*, '(A, F12.9, A)') 'Elapsed read time for both lists : ', (T2 - T1), ' s'
+    write(*, '(A, F12.9, A)') 'Elapsed search time: ', (T2 - T1), ' s'
     deallocate(w_ids)
 
 end program loop

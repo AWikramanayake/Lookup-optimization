@@ -67,8 +67,8 @@ module misc_functions
             integer, dimension(1000) :: matches_buffer
             integer, dimension(testlength), intent(in) :: testlist
             integer :: i, k, numdigits, divisor1, divisor2
-            real :: Ts, Te
-            integer :: n, out
+            integer :: n, out, matchcount
+            matchcount = 0
             do k=1, testlength
                 numdigits = int(log10(real(testlist(k))) + 1)
                 divisor1 = 10**numdigits
@@ -79,7 +79,8 @@ module misc_functions
                         out = MOD(n, divisor1)
                         n = (n / 10)
                         if (out == testlist(k)) then
-                            write(*, '(I0, A, I0)') testlist(k), ', ', inlist(i)
+                            matchcount = matchcount+1
+                            ! write(*, '(I0, A, I0)') testlist(k), ', ', inlist(i)
                         end if
                         if (n < divisor2) then
                             exit

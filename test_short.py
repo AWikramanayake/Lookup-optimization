@@ -6,7 +6,7 @@ import pandas as pd
 # numlist = np.random.randint(1000000, 1000000000, 100000)
 
 # Use the existing test numlist for apples-to-apples comparison
-df = pd.read_csv('Fortran/test_numlist.csv')
+df = pd.read_csv('Fortran-dev/test_numlist.csv')
 numlist = df['0']
 
 # sequence to search for
