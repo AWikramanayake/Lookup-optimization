@@ -64,7 +64,6 @@ module misc_functions
             implicit none
             integer, intent(in) :: listlength, testlength
             integer, dimension(listlength), intent(in) :: inlist
-            integer, dimension(1000) :: matches_buffer
             integer, dimension(testlength), intent(in) :: testlist
             integer :: i, k, numdigits, divisor1, divisor2
             integer :: n, out, matchcount
@@ -80,7 +79,10 @@ module misc_functions
                         n = (n / 10)
                         if (out == testlist(k)) then
                             matchcount = matchcount+1
-                            ! write(*, '(I0, A, I0)') testlist(k), ', ', inlist(i)
+                            !write(*, '(I0, A, I0)') testlist(k), ', ', inlist(i) ! Placeholder for function to save matches
+                            ! straightforward solution: write match pair to external file or console
+                            ! however that may break parallelizability of the loop
+                            ! find pure function/subroutine solution
                         end if
                         if (n < divisor2) then
                             exit
@@ -89,7 +91,7 @@ module misc_functions
                 end do
             end do
             print *, 'Match search completed'
-
+            write(*, '(I0, A)') matchcount, ' matches found'
         end subroutine find_matches_list
 
 end module misc_functions
