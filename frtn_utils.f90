@@ -73,7 +73,7 @@ module misc_functions
                 divisor1 = 10**numdigits
                 divisor2 = 10**(numdigits-1)
                 do concurrent(i = 1:listlength)
-                n = inlist(i)
+                    n = inlist(i)
                     do while(n /= 0)
                         out = MOD(n, divisor1)
                         n = (n / 10)
