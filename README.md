@@ -1,4 +1,4 @@
-# OSM-lookup-speedcomp
+# Lookup-optimization
 
 A quick test to study the potential performance gains from building data engineering functionalities of other projects with Fortran (or C++ -> future step!) instead of Python.
 
