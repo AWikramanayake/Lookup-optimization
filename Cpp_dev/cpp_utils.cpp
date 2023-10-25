@@ -19,6 +19,10 @@ void readList(DataList ListObj) {
     int num;
     std::ifstream InFile;
     InFile.open(ListObj.list_name);
+    if (ListObj.skip_header == true) {
+        std::string line;
+        std::getline(InFile, line);
+    }
     std::cout << "Reading list " << ListObj.list_name << std::endl;
     while (line_num < ListObj.list_len && InFile >> num) {
         ListObj.list_data[line_num] = num;

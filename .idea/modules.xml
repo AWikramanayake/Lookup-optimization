@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/OSM-Fortran-lookup.iml" filepath="$PROJECT_DIR$/.idea/OSM-Fortran-lookup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Lookup-optimization/.idea/OSM-Fortran-lookup.iml" filepath="$PROJECT_DIR$/../Lookup-optimization/.idea/OSM-Fortran-lookup.iml" />
     </modules>
   </component>
 </project>

@@ -28,6 +28,10 @@ void readList(DataList ListObj) {
     int num;
     std::ifstream InFile;
     InFile.open(ListObj.list_name);
+    if (ListObj.skip_header == true) {
+        std::string line;
+        std::getline(InFile, line);
+    }
     std::cout << "Reading list " << ListObj.list_name << std::endl;
     while (line_num < ListObj.list_len && InFile >> num) {
         ListObj.list_data[line_num] = num;
@@ -70,7 +74,9 @@ std::vector<std::vector<uint_fast64_t> > findSingleMatches(DataList ID_List, int
     std::vector<std::vector<uint_fast64_t> > matches;
     uint_fast8_t numdigits, divisor1, divisor2, num_matches;
     uint_fast64_t n, out;
-    numdigits = baseTenDigits(test_sequence);
+    // NEEDS FURTHER DEBUGGING
+    // numdigits = baseTenDigits(test_sequence) + 1;
+    numdigits = log10(test_sequence) + 1
     divisor1 = quick_pow10(numdigits);
     divisor2 = quick_pow10(numdigits-1);
     num_matches = 0;
