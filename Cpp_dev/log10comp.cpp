@@ -117,7 +117,7 @@ int main() {
     for (int i = 0; i < 1000; i++) {
         if (!(cmath_res[i] == lookup_res[i] && cmath_res[i] == lookupU8_res[i])) {
             mismatches++;
-            std::cout << cmath_res[i] << " " << lookup_res[i] << " " << lookupU8_res[i] << " " << arr[i] << std::endl;
+            // std::cout << cmath_res[i] << " " << lookup_res[i] << " " << lookupU8_res[i] << " " << arr[i] << std::endl;
         }
     }
     std::cout << "Mismatches: " << mismatches << std::endl;
