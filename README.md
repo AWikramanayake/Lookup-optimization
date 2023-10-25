@@ -34,7 +34,7 @@ Let's try the same integer mask method with Fortran:<br>
 </p>
 <p align="center">
 
-And now we see the integer mask method is now 10x ***faster*** than the python string method, instead of >10x slower. And there is still a lot of room for improvement. Next steps:<br>
+And now the integer mask method is 10x ***faster*** than the python string method, instead of >10x slower. And there is still a lot of room for improvement. Next steps:<br>
 
 - Improve the integer mask method (both by making the algorithm itself more efficient and by improving the code).
 - Add parallelization. **C++**: add GPU parallelization with C++ CUDA. **Fortran**: rewrite the algorithm with pure subroutines so the <code>do concurrent</code> loop can be parallelized.
