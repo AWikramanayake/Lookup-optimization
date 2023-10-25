@@ -27,7 +27,7 @@ This approach is far from perfect, at least pending significant optimization. Th
 At first glance, it isn't promising. The integer mask method takes more than 10x as long! But there are some things to take into consideration. Since the list of test sequences is much smaller than in realistic use cases, the memory constraints from the string method aren't as apparent. There are also a LOT of possible ways to improve the integer mask method (more on that later), but most importantly, Python is a terrible choice of language for running it.
 
 Let's try the same integer mask method with Fortran:<br>
-<code>exec_fortran</code><br>
+<code>exec_fortran (uses floop_utils.f90, fortran_loop.f90)</code><br>
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/AWikramanayake/Lookup-optimization/master/misc_assets/Fortran%20loop%20performace.png" width="800"/>
