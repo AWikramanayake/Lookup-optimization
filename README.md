@@ -16,7 +16,7 @@ matching the number of digits in the test sequence and check equality. In the ab
 134[***60235***]75 == 60235? ✓<br><br>
 And having confirmed it is a match, we can save this as a potential match and break/continue to the next iteration of the loop (there can be multiple matches per test sequence).<br>
 
-This approach is far from perfect, at least not without significant optimization. The most straightforward implementation involves several mathematical operations (modulus, log10, etc). Let's see how it performs on a small list of test sequences (25 test sequences, 63 million integer list):<br>
+This approach is far from perfect, at least pending significant optimization. The most straightforward implementation involves several mathematical operations (modulus, log10, etc). Let's see how it performs on a small list of test sequences (25 test sequences, 63 million integer list):<br>
 <code>test_loop.py</code><br>
 
 <p align="center">
