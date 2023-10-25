@@ -8,7 +8,7 @@ The first problem I am working on, and the current focus of this project, is fai
 
 There is a very obvious way to do this with python: convert everything to strings and use a nested loop to compare each test sequence with the entries in the master list. The problem is that these lists are *huge*. The master list has tens of millions of entries. And it's drawn from one column out of hundreds, so future tasks might require working with even more data. Not to mention there are over a thousand test sequences, which could rise to tens of thousands. The string approach quickly becomes prohibitively memory and computationally intensive.
 
-So is there another way? One way is to do the search, but keep everything in integer form. The crude,straightforward approach is to break each integer from the parent list into pieces
+So is there another way? One way is to do the search, but keep everything in integer form. The crude approach is to break each integer from the parent list into pieces
 matching the number of digits in the test sequence and check equality. In the above example it would look like this:<br><br>
 [***13460***]23575 == 60235? X<br>
 1[***34602***]3575 == 60235? X<br>
