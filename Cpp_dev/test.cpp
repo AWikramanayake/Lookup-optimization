@@ -86,8 +86,8 @@ std::vector<std::vector<uint_fast64_t> > findSingleMatches(DataList ID_List, int
             n = (n / 10);
             if (out == test_sequence) {
                 matches.push_back(std::vector<uint_fast64_t>());
-                matches[num_matches].push_back(out);
                 matches[num_matches].push_back(test_sequence);
+                matches[num_matches].push_back(ID_List.list_data[i]);
                 num_matches++;
             }
             if (n < divisor2) {
@@ -101,11 +101,11 @@ std::vector<std::vector<uint_fast64_t> > findSingleMatches(DataList ID_List, int
         std::cout << "No matches found\n";
     }
     else {
-        // std::cout << "Matches: \n";
-        // for (int i = 0; i < num_matches; i++) {
-        //std::cout << matches[i][0] << ", " << matches[i][1] << "\n";
-        // }
-        std::cout << "Matches: " << num_matches << "\n";
+        std::cout << "Matches: \n";
+        for (int i = 0; i < num_matches; i++) {
+        std::cout << matches[i][0] << ", " << matches[i][1] << "\n";
+        }
+        std::cout << "# of matches: " << num_matches << "\n";
     }
     return matches;
 }
@@ -127,7 +127,7 @@ int main() {
     std::cout << "Input a list of test sequences? Else: manually input a single test sequence\n";
     std::cout << "1 -> list of sequences, 0 -> single sequence\n";
     std::cin >> many_seq;
-    if (single_seq == false) {
+    if (many_seq == false) {
         std::cout << "Enter integer sequence to search for\n";
         std::cin >> testseq;
     }
