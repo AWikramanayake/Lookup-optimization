@@ -75,7 +75,7 @@ std::vector<std::vector<uint_fast64_t> > findSingleMatches(DataList ID_List, int
     uint_fast64_t n, out;
     // NEEDS FURTHER DEBUGGING
     // numdigits = baseTenDigits(test_sequence) + 1;
-    numdigits = log10(test_sequence) + 1;
+    numdigits = baseTenDigits(test_sequence);
     divisor1 = pow(10, numdigits);
     divisor2 = pow(10, numdigits-1);
     num_matches = 0;
@@ -118,6 +118,7 @@ int main() {
     DataList seqList;
     unsigned int testseq;
 
+    /*
     std::cout << "Enter Way ID list filename\n";
     std::cin >> wayList.list_name;
     std::cout << "Enter length of Way ID list\n";
@@ -139,15 +140,16 @@ int main() {
         std::cout << "Skip a line for column header?\n1 -> Skip, 0 -> Don't skip\n";
         std::cin >> seqList.skip_header;
     }
+    */
 
-    /*
+    // /*
     //DEBUG
     wayList.list_name = "test_numlist.csv";
     wayList.list_len = 100000;
     wayList.skip_header = true;
     many_seq = false;
     testseq = 60235;
-    */
+    // */
 
 
     std::cout << "Program has begun" << std::endl;
