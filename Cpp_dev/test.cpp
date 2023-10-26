@@ -14,7 +14,7 @@
 
 class DataList {
     public:
-        std::vector<int> list_data;
+        std::vector<unsigned int> list_data;
         int list_len;
         std::string list_name;
         bool skip_header;
@@ -23,48 +23,47 @@ class DataList {
         };
 };
 
-void readList(DataList ListObj) {
+std::vector<unsigned int> readList(DataList ListObj) {
+    std::vector<unsigned int> outlist;
+    outlist.resize(ListObj.list_len);
     int line_num = 0;
-    int num;
+    uint64_t num;
     std::ifstream InFile;
     InFile.open(ListObj.list_name);
     if (ListObj.skip_header == true) {
         std::string line;
         std::getline(InFile, line);
+        std::cout << "skipped line\n";
     }
     std::cout << "Reading list " << ListObj.list_name << std::endl;
     while (line_num < ListObj.list_len && InFile >> num) {
-        ListObj.list_data[line_num] = num;
-    };
+        outlist[line_num] = num;
+        line_num++;
+    }
+    return outlist;
 };
 
-uint_fast8_t baseTwoDigits(unsigned int x) {
+unsigned int baseTwoDigits(unsigned int x) {
     return x ? 32 - __builtin_clz(x) : 0;
 }
 
-static uint_fast8_t baseTenDigits(unsigned int x) {
-    static const unsigned char guess[33] = {
-        0, 0, 0, 0, 1, 1, 1, 2, 2, 2,
-        3, 3, 3, 3, 4, 4, 4, 5, 5, 5,
-        6, 6, 6, 6, 7, 7, 7, 8, 8, 8,
-        9, 9, 9
+static unsigned int baseTenDigits(unsigned int x) {
+    static const unsigned char guess[65] = {
+        0 ,0 ,0 ,0 , 1 ,1 ,1 , 2 ,2 ,2 ,
+        3 ,3 ,3 ,3 , 4 ,4 ,4 , 5 ,5 ,5 ,
+        6 ,6 ,6 ,6 , 7 ,7 ,7 , 8 ,8 ,8 ,
+        9 ,9 ,9 ,9 , 10,10,10, 11,11,11,
+        12,12,12,12, 13,13,13, 14,14,14,
+        15,15,15,15, 16,16,16, 17,17,17,
+        18,18,18,18, 19
     };
-    static const uint_fast64_t tenToThe[] = {
-        1, 10, 100, 1000, 10000, 100000,
-        1000000, 10000000, 100000000, 1000000000, 10000000000, 100000000000, 1000000000000,
-    };
-    uint_fast8_t digits = guess[baseTwoDigits(x)];
-    return digits + (x >= tenToThe[digits]);
-};
-
-static uint_fast64_t quick_pow10(uint_fast8_t n)
-{
-    static uint_fast64_t pow10[15] = {
+    static const long unsigned int tenToThe[] = {
         1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000,
         1000000000, 10000000000, 100000000000, 1000000000000, 10000000000000, 100000000000000,
+        1000000000000000, 10000000000000000, 100000000000000000, 1000000000000000000, 10000000000000000000,
     };
-
-    return pow10[n];
+    unsigned int digits = guess[baseTwoDigits(x)];
+    return digits + (x >= tenToThe[digits]);
 }
 
 void findListMatches(DataList ID_List, DataList Test_Seqs) {
@@ -72,13 +71,13 @@ void findListMatches(DataList ID_List, DataList Test_Seqs) {
 
 std::vector<std::vector<uint_fast64_t> > findSingleMatches(DataList ID_List, int test_sequence) {
     std::vector<std::vector<uint_fast64_t> > matches;
-    uint_fast8_t numdigits, divisor1, divisor2, num_matches;
+    uint_fast64_t numdigits, divisor1, divisor2, num_matches;
     uint_fast64_t n, out;
     // NEEDS FURTHER DEBUGGING
     // numdigits = baseTenDigits(test_sequence) + 1;
-    numdigits = log10(test_sequence) + 1
-    divisor1 = quick_pow10(numdigits);
-    divisor2 = quick_pow10(numdigits-1);
+    numdigits = log10(test_sequence) + 1;
+    divisor1 = pow(10, numdigits);
+    divisor2 = pow(10, numdigits-1);
     num_matches = 0;
     for (int i = 0; i < ID_List.list_len; i++) {
         n = ID_List.list_data[i];
@@ -92,7 +91,7 @@ std::vector<std::vector<uint_fast64_t> > findSingleMatches(DataList ID_List, int
                 num_matches++;
             }
             if (n < divisor2) {
-                continue;
+                break;
             }
         }
     }
@@ -102,10 +101,11 @@ std::vector<std::vector<uint_fast64_t> > findSingleMatches(DataList ID_List, int
         std::cout << "No matches found\n";
     }
     else {
-        std::cout << "Matches: \n";
-        for (int i = 0; i < num_matches; i++) {
-            std::cout << matches[i][0] << ", " << matches[i][1] << "\n";
-        }
+        // std::cout << "Matches: \n";
+        // for (int i = 0; i < num_matches; i++) {
+        //std::cout << matches[i][0] << ", " << matches[i][1] << "\n";
+        // }
+        std::cout << "Matches: " << num_matches << "\n";
     }
     return matches;
 }
@@ -113,10 +113,10 @@ std::vector<std::vector<uint_fast64_t> > findSingleMatches(DataList ID_List, int
 int main() {
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;
-    bool single_seq;
+    bool many_seq;
     DataList wayList;
     DataList seqList;
-    int testseq;
+    unsigned int testseq;
 
     std::cout << "Enter Way ID list filename\n";
     std::cin >> wayList.list_name;
@@ -126,12 +126,12 @@ int main() {
     std::cin >> wayList.skip_header;
     std::cout << "Input a list of test sequences? Else: manually input a single test sequence\n";
     std::cout << "1 -> list of sequences, 0 -> single sequence\n";
-    std::cin >> single_seq;
+    std::cin >> many_seq;
     if (single_seq == false) {
         std::cout << "Enter integer sequence to search for\n";
         std::cin >> testseq;
     }
-    else if (single_seq == true) {
+    else if (many_seq == true) {
         std::cout << "Enter filename of list of sequences\n";
         std::cin >> seqList.list_name;
         std::cout << "Enter length of the list or the number of values to read\n";
@@ -140,25 +140,35 @@ int main() {
         std::cin >> seqList.skip_header;
     }
 
+    /*
+    //DEBUG
+    wayList.list_name = "test_numlist.csv";
+    wayList.list_len = 100000;
+    wayList.skip_header = true;
+    many_seq = false;
+    testseq = 60235;
+    */
+
+
     std::cout << "Program has begun" << std::endl;
 
     wayList.setListSize();
 
     std::cout << "Reads have begun\n";
     begin = std::chrono::steady_clock::now();
-    readList(wayList);
+    wayList.list_data = readList(wayList);
 
-    if (single_seq == false) {
+    if (many_seq == false) {
         end = std::chrono::steady_clock::now();
         std::vector<std::vector<uint_fast64_t> > single_matches;
         std::cout << "Elapsed time for list read: " << std::chrono::duration_cast<std::chrono::microseconds> (end - begin).count() << "[μs]" << std::endl;
-        std::cout << "Search for matches has begun";
+        std::cout << "Search for matches has begun\n";
         begin = std::chrono::steady_clock::now();
         single_matches = findSingleMatches(wayList, testseq);
         end = std::chrono::steady_clock::now();
     }
 
-    if (single_seq == true) {
+    if (many_seq == true) {
         seqList.setListSize();
         readList(seqList);
         end = std::chrono::steady_clock::now();
