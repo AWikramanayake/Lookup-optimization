@@ -1,5 +1,6 @@
 program loop
     use misc_functions
+    use omp_lib
     implicit none
     integer :: testseq
     logical :: seq_list
